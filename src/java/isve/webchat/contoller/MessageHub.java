@@ -58,8 +58,7 @@ public class MessageHub extends HttpServlet {
             e.printStackTrace();
         } 
     }
-
-    
+  
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -135,8 +134,7 @@ public class MessageHub extends HttpServlet {
         
         Map<String, String> parsedMessage = MessageUtil.parseXML(XmlMessage.getBytes("UTF-8"));
         String responseMessage = MessageHandler.handleMessage(parsedMessage,tenant);
-        log("send message:             "+responseMessage);
-        
+     
         if(isCrypted){
             try {
                 responseMessage = encrypt(tenant, responseMessage);
@@ -146,8 +144,6 @@ public class MessageHub extends HttpServlet {
                 log("UnsupportedEncodingException !");
             }
         }
-
-        log("send encrypted message:             "+responseMessage);
         
         PrintWriter out = null;
         try {
