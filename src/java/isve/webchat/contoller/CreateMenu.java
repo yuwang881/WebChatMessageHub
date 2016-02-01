@@ -36,7 +36,7 @@ import org.json.JSONObject;
  *
  * @author yuwang881@gmail.com
  */
-@WebServlet(name = "CreateMenu", urlPatterns = {"/CreateMenu"})
+@WebServlet(name = "CreateMenu", urlPatterns = {"/CreateMenu/*"})
 public class CreateMenu extends HttpServlet {
 
     /**
@@ -50,48 +50,56 @@ public class CreateMenu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String menuString = getMenuJson();
-            String token = getAccessToken(WeixinConstants.Access_TokenURL);
-            if (token !=null) {
-                String result = createMenu(menuString,token);
-                out.println(result);
-            }
+
+            String result = null;
+            String tenant = request.getParameter("tenant");
+            String menuFileName = request.getParameter("menuFile");
             
+            if (menuFileName == null || tenant ==null) {
+                log("cannot get menu file name or tenant ID!");
+                result = "Cannot find the menuFile or tenant parameters in the URL!";
+            } else {
+               result = createMenu(menuFileName, tenant);
+            }
+            out.println(result);
             out.flush();
         }
     }
 
-    private String getAccessToken(String tokenurl) throws Exception {
-        HttpsURLHelper helper = new HttpsURLHelper(true);
-        String resp =helper.get(tokenurl);
-        helper.close();
-        
-        JSONObject json = new JSONObject(resp);
-        String token=null;
-        try {
-            token = json.getString("access_token");
-        } catch (JSONException JE) {
-            log("cannot get access token, error: "+ resp);
-        }
-        return token;
-    }
     
-    private String createMenu(String menu, String token) throws Exception {
-        HttpsURLHelper helper = new HttpsURLHelper(true);
-        helper.setEncoding("GBK");
-        String result = helper.Post(WeixinConstants.MenuCreateURL+token, menu);
-        helper.close();
+    
+    
+    private String createMenu(String menuFile, String tenant) throws Exception {
+        
+        // get menu JSON String
+        String MenuJSON = getMenuJson(menuFile);
+            
+        //get Access_Token
+        String access_token = getAccessToken(tenant);
+        
+        String result = null;
+        
+        if (access_token != null) {
+            //get https helper
+            HttpsURLHelper helper = new HttpsURLHelper(true);
+            helper.setEncoding("GBK");
+            result = helper.Post(WeixinConstants.MenuCreateURL+access_token, MenuJSON);
+            helper.close();
+        } 
+        
         return result;
     }
     
-    private String getMenuJson() {
+    
+    
+    private String getMenuJson(String menufilename) {
         StringBuffer menuJson = new StringBuffer();
         InputStreamReader isr = null;
         BufferedReader reader = null;
-        String filename = "/WEB-INF/menu.json";
+        String filename = "/WEB-INF/"+menufilename;
         try {
             InputStream is = getServletContext().getResourceAsStream(filename);
             if (is != null) {
@@ -111,6 +119,25 @@ public class CreateMenu extends HttpServlet {
             log("IOException: "+e.getMessage());
         } 
         return menuJson.toString();
+    }
+    
+    private String getAccessToken(String tenant) throws Exception {
+        HttpsURLHelper helper = new HttpsURLHelper(true);
+        String appid= WeixinConstants.multiTenants.get(tenant).get("APPID");
+        String secret = WeixinConstants.multiTenants.get(tenant).get("APPSECRET");
+        String getTokenURL =  String.format(WeixinConstants.Access_TokenURL,appid,secret);
+        
+        String resp =helper.get(getTokenURL);
+        helper.close();
+        
+        JSONObject json = new JSONObject(resp);
+        String token=null;
+        try {
+            token = json.getString("access_token");
+        } catch (JSONException JE) {
+            log("cannot get access token, error: "+ resp);
+        }
+        return token;
     }
     
     
