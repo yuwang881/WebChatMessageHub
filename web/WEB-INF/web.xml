@@ -14,7 +14,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateMenu</servlet-name>
-        <url-pattern>/CreateMenu</url-pattern>
+        <url-pattern>/CreateMenu/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
