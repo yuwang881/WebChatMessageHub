@@ -11,7 +11,7 @@ public class ConfigUtil {
     static {
         try {
             props.load(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("weixin.properties"));
+                    .getResourceAsStream("conf/weixin.properties"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

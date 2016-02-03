@@ -4,6 +4,10 @@
         <servlet-name>MessageHub</servlet-name>
         <servlet-class>isve.webchat.contoller.MessageHub</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OAuth</servlet-name>
+        <servlet-class>isve.webchat.contoller.OAuth</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MessageHub</servlet-name>
         <url-pattern>/MessageHub/*</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>CreateMenu</servlet-name>
         <url-pattern>/CreateMenu/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OAuth</servlet-name>
+        <url-pattern>/OAuth/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

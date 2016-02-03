@@ -15,9 +15,15 @@
  */
 package isve.webchat.util.constants;
 
+import isve.webchat.conf.weixin.TenantType;
+import isve.webchat.conf.weixin.TenantsListType;
 import isve.webchat.util.comm.ConfigUtil;
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 /**
  *
@@ -31,6 +37,7 @@ public class WeixinConstants {
    
     public static String MenuCreateURL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
     public static String Access_TokenURL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%1$s&secret=%2$s";
+    public static String OAuth_TokenURL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%1$s&secret=%2$s&code=%3$s&grant_type=authorization_code";
 
     public static String encryptedMessageTemplate = "<xml>\n" + "<Encrypt><![CDATA[%1$s]]></Encrypt>\n"
 				+ "<MsgSignature><![CDATA[%2$s]]></MsgSignature>\n"
@@ -44,23 +51,30 @@ public class WeixinConstants {
             + "</xml>";
     
     static {
+        
         multiTenants = new HashMap();
-        for (int i=1; i<=tenantNum; i++){
-            String tenantName = null;
-            if (i<10) tenantName = "tenant00"+i;
-            else if (i<100) tenantName = "tenant0"+i;
-            else tenantName = "tenant"+i;
-            
-            Map<String,String> config = new HashMap();
-            config.put("TOKEN",ConfigUtil.get(tenantName+".Token") );
-            config.put("APPID",ConfigUtil.get(tenantName+".appID") );
-            config.put("APPSECRET",ConfigUtil.get(tenantName+".appsecret") );
-            config.put("UID",ConfigUtil.get(tenantName+".uid") );
-            config.put("ENCRYPTION",ConfigUtil.get(tenantName+".EncryptionType","raw") );
-            config.put("AESKEY",ConfigUtil.get(tenantName+".AESKey","0x00") );
-            
-            multiTenants.put(tenantName, config);
+        try {
+            JAXBContext jc = JAXBContext.newInstance("isve.webchat.conf.weixin");
+            Unmarshaller u = jc.createUnmarshaller();
+            JAXBElement e = (JAXBElement) u.unmarshal(Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("conf/weixin.xml"));
+            TenantsListType tenants = (TenantsListType) e.getValue();
+            for (TenantType tenant : tenants.getTenant()) {
+                Map<String, String> config = new HashMap();
+                config.put("TOKEN", tenant.getToken());
+                config.put("APPID", tenant.getAppId());
+                config.put("APPSECRET", tenant.getAppSecret());
+                config.put("UID", tenant.getUid());
+                config.put("ENCRYPTION", tenant.getEncryptionType());
+                config.put("AESKEY", tenant.getAesKey());
+                multiTenants.put(tenant.getTenantId(), config);
+            }
+           
+        } catch (JAXBException ex) {
+            System.out.println("JAXB binding error!");
         }
+        
+      
     }
     
     /**

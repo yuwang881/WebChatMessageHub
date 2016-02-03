@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configurations>
+    <stateCode>
+        <statePattern>001*</statePattern>
+        <tenant>tenant001</tenant>
+        <stateHandler>isve.webchat.stateHandlers.LoginPage</stateHandler>
+        <action>forward</action>
+        <pageUri>/login.jsp</pageUri>
+    </stateCode>
+    <stateCode>
+        <statePattern>000000005</statePattern>
+        <tenant>tenant002</tenant>
+        <stateHandler>isve.webchat.stateHandlers.SaveOpenId</stateHandler>
+        <action>forward</action>
+        <pageUri>/test.html</pageUri>
+    </stateCode>
+    <stateCode>
+        <statePattern>000000006</statePattern>
+        <tenant>tenant001</tenant>
+        <stateHandler>isve.webchat.stateHandlers.DoNothing</stateHandler>
+        <action>redirect</action>
+        <pageUri>http://www.baidu.com</pageUri>
+    </stateCode>
+</configurations>

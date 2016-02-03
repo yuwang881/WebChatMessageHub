@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            jxb:version="2.0">
+
+<xsd:element name="configurations" type="ConfigurationsListType"/>
+
+<xsd:complexType name="ConfigurationsListType">
+  <xsd:sequence>
+    <xsd:element name="stateCode" type="StateCodeType"
+                 maxOccurs="unbounded"/>
+  </xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="StateCodeType">
+  <xsd:sequence>
+    <xsd:element name="statePattern" type="xsd:string"/>
+    <xsd:element name="tenant" type="xsd:string"/>
+    <xsd:element name="stateHandler" type="xsd:string"/>
+    <xsd:element name="action" type="xsd:string"/>
+    <xsd:element name="pageUri" type="xsd:string"/>
+  </xsd:sequence>
+</xsd:complexType>
+
+</xsd:schema>
