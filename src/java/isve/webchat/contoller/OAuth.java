@@ -60,16 +60,16 @@ public class OAuth extends HttpServlet {
                
         // get tenant, StateHandler by state mapping
         StateCodeType mystatecode = statecodes.get(state);
+        if (mystatecode == null) {
+            log("cannot got state handler from the config file!");
+            return;
+        }
         String returnURL =  mystatecode.getHandler().stateProcess(request, mystatecode.getTenant(), code, mystatecode.getPageUri());
                
         if (mystatecode.getAction().equals("forward"))  
             getServletContext().getRequestDispatcher(returnURL).forward(request, response);
         else 
             response.sendRedirect(returnURL);
-      
-        
-        
-
     }
 
     

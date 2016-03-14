@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/constants/WeixinConstants.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/TokenService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/FileService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/comm/ConfigUtil.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/contoller/CreateMenu.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/web/WEB-INF/menu.json</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/MessageService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/MessageHandler.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/MenuService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/QRcodeService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/contoller/MessageHub.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/UserService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/conf/weixin.xml</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/SignService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/constants/IncomeMessage.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/web/WEB-INF/menu_1.json</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/contoller/OAuth.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/OAuthService.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/stateHandlers/StateHandler.java</file>
+            <file>file:/D:/MyProjects/NetBeansProjects/WebChatTools/src/java/isve/webchat/util/services/UserGroupService.java</file>
+        </group>
+    </open-files>
+</project-private>

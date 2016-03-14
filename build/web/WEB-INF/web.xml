@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>MessageHub</servlet-name>
+        <servlet-class>isve.webchat.contoller.MessageHub</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OAuth</servlet-name>
+        <servlet-class>isve.webchat.contoller.OAuth</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MessageHub</servlet-name>
+        <url-pattern>/MessageHub/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateMenu</servlet-name>
+        <servlet-class>isve.webchat.contoller.CreateMenu</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateMenu</servlet-name>
+        <url-pattern>/CreateMenu/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OAuth</servlet-name>
+        <url-pattern>/OAuth/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

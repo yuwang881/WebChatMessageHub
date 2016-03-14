@@ -23,6 +23,7 @@ import isve.webchat.util.services.MessageHandler;
 import isve.webchat.util.services.SignService;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -76,6 +77,14 @@ public class MessageHub extends HttpServlet {
         } catch (UnsupportedEncodingException e) {  }
         response.setCharacterEncoding("UTF-8");
         
+//        String uri = request.getScheme() + "://" +
+//             request.getServerName() + 
+//             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+//             request.getRequestURI() +
+//            (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+//        
+//        log("The full URL is: "+uri);
+        
         // get tenantid from request PathInfo
         String tenant = getTenant(request);
         
@@ -104,17 +113,17 @@ public class MessageHub extends HttpServlet {
         } catch (Exception e) {
             log("Read Post data error: "+ e.getMessage());
         } 
-        log("get message from the weinxin server:   "+message.toString());
+        //log("get message from the weinxin server:   "+message.toString());
         
         if (isCrypted) {  //是加密的消息
             Map<String, String> parsedMessage = MessageUtil.parseXML(message.toString().getBytes("UTF-8"));
             String encryptedString = parsedMessage.get("Encrypt");
-            log("encryptedString: "+encryptedString);
+            //log("encryptedString: "+encryptedString);
             if (!checkCryptedSignature(request, tenant,encryptedString)) {
                 log("signature validation failed!");
                 return;
             }      
-            log("crypted message signature validation success!!");
+            //log("crypted message signature validation success!!");
             try {
                 XmlMessage = decrypt(tenant,encryptedString);
             } catch (AesException ex) {
@@ -145,11 +154,17 @@ public class MessageHub extends HttpServlet {
             }
         }
         
-        PrintWriter out = null;
+        OutputStream outs =null;
+        //PrintWriter out = null;
         try {
-            out = response.getWriter();
-            out.print(responseMessage);
-            out.flush();
+//            out = response.getWriter();
+//            out.print(responseMessage);
+//            out.flush();
+            
+            outs = response.getOutputStream();
+            outs.write(responseMessage.getBytes("UTF-8"));
+            outs.flush();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,8 +203,6 @@ public class MessageHub extends HttpServlet {
         
    }
     
-    
-    
     private boolean checkSignature(HttpServletRequest request, String tenant) {
         String msg_signature = request.getParameter("msg_signature");
         String signature = request.getParameter("signature");
@@ -199,8 +212,6 @@ public class MessageHub extends HttpServlet {
         return SignService.checkSignature(tenant, signature, timestamp, nonce);
       
     }
-    
-   
     
     private boolean checkCryptedSignature(HttpServletRequest request, String tenant, String encryptedString ) {
          String msg_signature =  request.getParameter("msg_signature");
@@ -213,7 +224,7 @@ public class MessageHub extends HttpServlet {
     private String decrypt(String tenant, String encryptedString) throws AesException {
         String appId = WeixinConstants.multiTenants.get(tenant).get("APPID");
         String aesKey = WeixinConstants.multiTenants.get(tenant).get("AESKEY");
-        log("APPID:  "+appId+"  AESKEY: "+aesKey);
+        //log("APPID:  "+appId+"  AESKEY: "+aesKey);
         return MessageCrypt.decrypt(appId, aesKey, encryptedString);
     }
     

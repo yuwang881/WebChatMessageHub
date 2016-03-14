@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2016 yuwang881@gmail.com.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+<tenants>
+    <tenant>
+        <tenantId>tenant001</tenantId>
+        <des>myTestAccount</des>
+        <appId>wxdcc753bc274a8a60</appId>
+        <appSecret>d4624c36b6795d1d99dcf0547af5443d</appSecret>
+        <encryptionType>raw</encryptionType>
+        <token>yuwang881</token>
+        <uid>gh_e162768bd940</uid>
+        <aesKey>123234535354356534</aesKey>
+    </tenant>
+    <tenant>
+        <tenantId>tenant002</tenantId>
+        <des>yuwang881@sohu.com</des>
+        <appId>wxf2f933b016473050</appId>
+        <appSecret>a151de1ec7192cf6dd4a27014dfd8ff6</appSecret>
+        <encryptionType>aes</encryptionType>
+        <token>yuwang881</token>
+        <uid>gh_bcd80829a3ba</uid>
+        <aesKey>383Z4GF6SC7S78qlM189G1KRNP59eNaRwNCI33ZHZY1</aesKey>
+    </tenant>
+</tenants>

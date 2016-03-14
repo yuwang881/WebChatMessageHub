@@ -36,6 +36,10 @@ public class WeixinConstants {
     
    
     public static String MenuCreateURL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+    public static String MenuConditionCreateURL = "https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=";
+    public static String MenuGetURL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=";
+    public static String MenuDeleteURL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=";
+    
     public static String Access_TokenURL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%1$s&secret=%2$s";
     public static String OAuth_TokenURL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%1$s&secret=%2$s&code=%3$s&grant_type=authorization_code";
 

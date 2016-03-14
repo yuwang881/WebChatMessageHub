@@ -17,6 +17,7 @@ package isve.webchat.contoller;
 
 import isve.webchat.util.comm.HttpsURLHelper;
 import isve.webchat.util.constants.WeixinConstants;
+import isve.webchat.util.services.MenuService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,43 +57,38 @@ public class CreateMenu extends HttpServlet {
 
             String result = null;
             String tenant = request.getParameter("tenant");
+            String menuaction = request.getParameter("action");
             String menuFileName = request.getParameter("menuFile");
             
+
             if (menuFileName == null || tenant ==null) {
                 log("cannot get menu file name or tenant ID!");
                 result = "Cannot find the menuFile or tenant parameters in the URL!";
             } else {
-               result = createMenu(menuFileName, tenant);
+                String MenuJSON = getMenuJson(menuFileName);
+                switch (menuaction) {
+                    case "create":
+                        result = MenuService.createMenu(MenuJSON, tenant);
+                        break;
+                    case "createcondition":
+                        result = MenuService.createConditionMenu(MenuJSON, tenant);
+                        break;
+                    case "delete":
+                        result = MenuService.deleteMenu(tenant);
+                        break;
+                    case "get":
+                        result = MenuService.getMenu(tenant);
+                        break;
+                     default:
+                            throw new IllegalArgumentException("Invalid menuaction! " );            
+                }
+                
             }
-            out.println(result);
+            out.print(result);
             out.flush();
         }
     }
 
-    
-    
-    
-    private String createMenu(String menuFile, String tenant) throws Exception {
-        
-        // get menu JSON String
-        String MenuJSON = getMenuJson(menuFile);
-            
-        //get Access_Token
-        String access_token = getAccessToken(tenant);
-        
-        String result = null;
-        
-        if (access_token != null) {
-            //get https helper
-            HttpsURLHelper helper = new HttpsURLHelper(true);
-            helper.setEncoding("GBK");
-            result = helper.Post(WeixinConstants.MenuCreateURL+access_token, MenuJSON);
-            helper.close();
-        } 
-        
-        return result;
-    }
-    
     
     
     private String getMenuJson(String menufilename) {
@@ -121,25 +117,7 @@ public class CreateMenu extends HttpServlet {
         return menuJson.toString();
     }
     
-    private String getAccessToken(String tenant) throws Exception {
-        HttpsURLHelper helper = new HttpsURLHelper(true);
-        String appid= WeixinConstants.multiTenants.get(tenant).get("APPID");
-        String secret = WeixinConstants.multiTenants.get(tenant).get("APPSECRET");
-        String getTokenURL =  String.format(WeixinConstants.Access_TokenURL,appid,secret);
-        
-        String resp =helper.get(getTokenURL);
-        helper.close();
-        
-        JSONObject json = new JSONObject(resp);
-        String token=null;
-        try {
-            token = json.getString("access_token");
-        } catch (JSONException JE) {
-            log("cannot get access token, error: "+ resp);
-        }
-        return token;
-    }
-    
+      
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

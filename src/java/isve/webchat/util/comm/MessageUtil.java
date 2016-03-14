@@ -92,7 +92,7 @@ public class MessageUtil {
                     index = tmp + 2;
                 }
             }
-            System.out.println(name + "                  :                                 " + value);
+            //System.out.println(name + "                  :                                 " + value);
             map.putIfAbsent(name, value);
             
         }

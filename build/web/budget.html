@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <link href="budget.css" rel="stylesheet">
+    </head>
+<body>
+  <div class="budget-container ">
+    <div id="reports-container">
+      <!-- ngRepeat: data in datas -->
+      <div ng-repeat="data in datas" class="ng-scope">
+        <div class="header expandlist-category-title ng-binding">ABOVE THE LINE</div>
+        <table class="budget-category-table table table-striped table-bordered" id="table-0">
+          <tbody>
+            <tr class="expandlist-category-header">
+              <th class="displayCol">Display</th>
+              <th class="acctCol">Acct</th>
+              <th class="descriptionCol">Description</th>
+              <th class="totalCol">Total</th>
+            </tr>
+            <!-- ngRepeat: item in data.details -->
+            <tr class="categoryRow ng-scope" ng-repeat="item in data.details">
+              <td class="displayCol"></td>
+              <td class="acctCol ng-binding">02.00</td>
+              <td class="descriptionCol ng-binding">story</td>
+              <td class="totalCol ng-binding">$60.00</td>
+            </tr>
+            <!-- end ngRepeat: item in data.details -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="rightAlign" colspan="2"><b>Total:</b></td>
+              <td class="totalCol ng-binding">$60.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- end ngRepeat: data in datas -->
+      <div ng-repeat="data in datas" class="ng-scope">
+        <div class="header expandlist-category-title ng-binding">PRODUCT</div>
+        <table class="budget-category-table table table-striped table-bordered" id="table-0">
+          <tbody>
+            <tr class="expandlist-category-header">
+              <th class="displayCol">Display</th>
+              <th class="acctCol">Acct</th>
+              <th class="descriptionCol">Description</th>
+              <th class="totalCol">Total</th>
+            </tr>
+            <!-- ngRepeat: item in data.details -->
+            <tr class="categoryRow ng-scope" ng-repeat="item in data.details">
+              <td class="displayCol"></td>
+              <td class="acctCol ng-binding">03.00</td>
+              <td class="descriptionCol ng-binding">cast</td>
+              <td class="totalCol ng-binding">$12.00</td>
+            </tr>
+            <!-- end ngRepeat: item in data.details -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="rightAlign" colspan="2"><b>Total:</b></td>
+              <td class="totalCol ng-binding">$12.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- end ngRepeat: data in datas -->
+      <table class="table table-bordered grandTotal">
+        <tbody>
+          <tr>
+            <td class="rightAlign" colspan="2"><b>Grand Total:</b></td>
+            <td class="totalCol">
+              <b>
+                                    <div id="grandTotal" class="ng-binding">¥ 72.00</div>
+                                </b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+
+</html>
